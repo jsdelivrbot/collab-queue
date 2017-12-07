@@ -11,7 +11,9 @@ $( document ).ready(function() {
     /* Persistent list of search results that accumulates values */
     var search_results = [];
 
-    /* Add a listener to the search button */
+    /*********************************************
+     *************** SEARCH BUTTON ***************
+     *********************************************/
     $("#search_button").click(function (event) {
 
         /* Retrieve the search string and properly encode it */
@@ -34,7 +36,7 @@ $( document ).ready(function() {
             /* When a response is received, add the search results to the search_results div and
              * to the persistent search_results object locally */
             spotify_search.addEventListener("load", function() {
-                var results = JSON.parse(this.responseText);
+                let results = JSON.parse(this.responseText);
 
                 /* Build a list of results */
                 var tracks = results.tracks.items;
@@ -55,6 +57,23 @@ $( document ).ready(function() {
         }
     });
 
+    /****************************************
+     ********** LOAD NEARBY QUEUES **********
+     ****************************************/
+    update_queues();
+
+
+    $('#queue_form').submit(function(e){
+        e.preventDefault();
+        var post_send = $.ajax({
+            url:'/home',
+            type:'post',
+            data:$('#queue_form').serialize()
+        });
+        post_send.done(update_queues());
+        $('#new_queue').val("");
+    });
+
 });
 
 
@@ -64,3 +83,20 @@ function getHashValue(key) {
   return matches ? matches[1] : null;
 }
 
+
+/****************************************
+ ********** LOAD NEARBY QUEUES **********
+ ****************************************/
+function update_queues() {
+
+    var queue_retrieval = new XMLHttpRequest();
+    queue_retrieval.addEventListener("load", function() {
+
+        let results = this.responseText;
+        $("#queue_results").html(results);
+
+    });
+
+    queue_retrieval.open("GET", "/nearby");
+    queue_retrieval.send();
+}
