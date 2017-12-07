@@ -1,0 +1,8 @@
+{
+  "name": "Collaborative Queue for Spotify",
+  "description": "A location based shared queue for Spotify",
+  "repository": "https://github.com/jGowgiel/collab-queue/",
+  "logo": "https://cdn.rawgit.com/heroku/node-js-getting-started/master/public/node.svg",
+  "keywords": ["node", "express", "heroku"],
+  "image": "heroku/nodejs"
+}
