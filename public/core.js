@@ -18,12 +18,11 @@ $( document ).ready(function() {
 
         /* Retrieve the search string and properly encode it */
         var track_string = $("#song_name").val();
-        var track_uri = encodeURIComponent(track_string);
-        if (track_uri != "") {
+        if (track_string != "") {
 
              /* Perform a Spotify GET request with the information in the query */
             var parameters = {
-                q: track_uri,
+                q: track_string,
                 type: "track",
                 market: "from_token",
                 /* Limit set for temporary readability */
