@@ -35,6 +35,15 @@ $( document ).ready(function() {
             /* When a response is received, add the search results to the search_results div and
              * to the persistent search_results object locally */
             spotify_search.addEventListener("load", function() {
+
+                /* If anything is wrong with this request, reroute to the home directory as a first
+                 * line of defense */
+                if (this.status != 200) {
+                    alert('Something went wrong with the request, so you are being directed to authorize this application again');
+                    window.location.replace(window.location.origin);
+                    return;
+                }
+
                 let results = JSON.parse(this.responseText);
 
                 /* Build a list of results */
